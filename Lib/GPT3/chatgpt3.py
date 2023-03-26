@@ -48,7 +48,6 @@ class ChatGPT3:
                 clear()
                 out = str(self.askGPT3(self.is_noun['TYPE'].format(text)))
                 is_word = str(self.askGPT3(self.grammar_checker['ENGLISH'].format(text))).strip()
-                print('----> ', is_word)
                 if(is_word in errors or is_word.__contains__(errors[0]) or is_word.__contains__(errors[1]) or is_word.__contains__(errors[2])):
                     print(is_word)
                     time.sleep(1.333)
@@ -63,7 +62,7 @@ class ChatGPT3:
                 out = {'TYPE':out}
                 print('     ** {} **'.format(list(out.keys())[0]))
                 print(out['TYPE'])
-                if(not noun):
+                if(not noun):#TODO: what happends when not is an verb and not is a noun , like adjetive for instance. 
                     self.types.extend(self.extended)
                 for _type in self.types:
                     separator()
