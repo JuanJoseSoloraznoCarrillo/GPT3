@@ -1,5 +1,7 @@
 $key_file = 'api_key.cnf'
-Set-Location 'D:\MyPyEnv\'
+$work_path = Get-Location
+$work_path = $work_path.Path
+Set-location $work_path
 $files = Get-ChildItem
 $documets_files = Get-ChildItem $HOME/Documents/
 $ps1_conf = $documets_files.Name.Contains('WindowsPowerShell')
