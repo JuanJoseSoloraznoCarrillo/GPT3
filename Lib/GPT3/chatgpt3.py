@@ -1,5 +1,5 @@
 import openai, os, sys, time
-
+#TODO: "Do the comments and documentations"
 def clear():
     os.system('cls')
 
