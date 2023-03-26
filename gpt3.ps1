@@ -3,14 +3,24 @@ $work_path = Get-Location
 $work_path = $work_path.Path
 Set-location $work_path
 $files = Get-ChildItem
-$documets_files = Get-ChildItem $HOME/Documents/
+try {
+    $documets_files = Get-ChildItem $HOME/Documents/
+}
+catch {
+    $documets_files = Get-ChildItem $HOME/Documentos/
+}
 $ps1_conf = $documets_files.Name.Contains('WindowsPowerShell')
 if($ps1_conf)
 {
     Write-Host "You are using the latest configuration for PS1 consoles !!!"
     Start-Sleep -Seconds 1.333
 }else{
-    cp -Recurse 'WindowsPowerShell' $HOME/Documents/
+    try {
+        cp -Recurse 'WindowsPowerShell' $HOME/Documents/
+    }
+    catch {
+        cp -Recurse 'WindowsPowerShell' $HOME/Documentos/
+    }
     echo "coping windows configurations"
     Start-Sleep -Seconds 1.333
 }
