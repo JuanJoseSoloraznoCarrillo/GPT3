@@ -10,11 +10,8 @@ catch {
     $documets_files = Get-ChildItem $HOME/Documentos/
 }
 $ps1_conf = $documets_files.Name.Contains('WindowsPowerShell')
-if($ps1_conf)
+if(-not $ps1_conf)
 {
-    Write-Host "You are using the latest configuration for PS1 consoles !!!"
-    Start-Sleep -Seconds 1.333
-}else{
     try {
         cp -Recurse 'WindowsPowerShell' $HOME/Documents/
     }
@@ -24,6 +21,7 @@ if($ps1_conf)
     echo "coping windows configurations"
     Start-Sleep -Seconds 1.333
 }
+
 if($files.Name.Contains($key_file))
 {
     $info = Get-Content $key_file

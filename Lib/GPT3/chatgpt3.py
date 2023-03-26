@@ -1,4 +1,5 @@
 import openai, os, sys, time
+from pygui import GUI
 #TODO: "Do the comments and documentations"
 def clear():
     os.system('cls')
@@ -7,7 +8,11 @@ def separator():
     print(120*'-')
 
 class ChatGPT3:
-    def __init__(self) -> None:
+    def __init__(self,mode) -> None:
+        if(mode=='Application'):
+            self.gui = 'yes'
+        else:
+            self.gui = 'no'
         self.grammar_checker = {'ENGLISH':'translate to english: "{}"'}
         self.translate = {'TRANSLATE':'translate to spanish: "{}"'}
         self.use = {'USES':'how to use the phrase "{}"'}
@@ -107,30 +112,36 @@ class ChatGPT3:
             print(self.askGPT3(to_check,is_text=True))
 
     def start(self):
-        clear()
-        user_input = str(input("What are you gonna do to day?: \n        ** Options**  \n [1] translate \n [2] ask something to chatgpt 3 \n [3] check your grammar \n [4] exit \n [*] menu [write 'menu'] \n Answer: "))
-        _input = user_input.upper()
-        while(_input != '1' or _input != '2' or _input != '3' or _input != '4'):
-            if(_input.__contains__('1')):
-                self.translator()
-            elif(_input.__contains__('2')):
-                self.chat_gpt3()
-            elif(_input.__contains__('3')):
-                self.check_grammar()
-            elif(_input.__contains__('4')):
-                exit()
-            elif(_input.__contains__('MENU')):
-                self.start()
-            else:
-                print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nPlease insert a valid option !!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-                time.sleep(1.333333)
-                clear()
-                user_input = str(input("What are you gonna do to day?: \n        ** Options**  \n [1] translate \n [2] ask something to chatgpt 3 \n [3] check your grammar \n [4] exit \n [*] menu [write 'menu'] \n Answer: "))
+        if(self.gui == 'yes'):
+            self.gui = GUI('CHAT GPT3','What are you wanna do today?')
+        else:
+            clear()
+            user_input = str(input("What are you gonna do to day?: \n        ** Options**  \n [1] translate \n [2] ask something to chatgpt 3 \n [3] check your grammar \n [4] exit \n [*] menu [write 'menu'] \n Answer: "))
+            _input = user_input.upper()
+            while(_input != '1' or _input != '2' or _input != '3' or _input != '4'):
+                if(_input.__contains__('1')):
+                    self.translator()
+                elif(_input.__contains__('2')):
+                    self.chat_gpt3()
+                elif(_input.__contains__('3')):
+                    self.check_grammar()
+                elif(_input.__contains__('4')):
+                    exit()
+                elif(_input.__contains__('MENU')):
+                    self.start()
+                else:
+                    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nPlease insert a valid option !!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                    time.sleep(1.333333)
+                    clear()
+                    user_input = str(input("What are you gonna do to day?: \n        ** Options**  \n [1] translate \n [2] ask something to chatgpt 3 \n [3] check your grammar \n [4] exit \n [*] menu [write 'menu'] \n Answer: "))
                 _input = user_input.upper()
 
 if(__name__ == '__main__'):
     key = sys.argv[1]
     openai.api_key = key
-    chat_gpt3 = ChatGPT3()
+    gui = GUI('Chat GPT3 mode','How would you like to work?','initial')
+    mode = str(gui.event)
+    del gui
+    chat_gpt3 = ChatGPT3(mode)
     clear()
     chat_gpt3.start()
