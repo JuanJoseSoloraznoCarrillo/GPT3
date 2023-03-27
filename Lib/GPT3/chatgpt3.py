@@ -1,12 +1,12 @@
-import openai, os, sys, time
+import openai, os, sys, time, subprocess
 from pygui import GUI
+
 #TODO: "Do the comments and documentations"
 def clear():
     os.system('cls')
 
 def separator():
     print(120*'-')
-
 class ChatGPT3:
     def __init__(self,mode) -> None:
         if(mode=='Application'):
@@ -111,9 +111,31 @@ class ChatGPT3:
             to_check = CHECK.format(text)
             print(self.askGPT3(to_check,is_text=True))
 
+    def start_GUI(self):
+        self.gui = GUI('CHAT GPT3','What are you wanna do today?')
+        persistance = False
+        result = ''
+        if(self.gui.event == 'Translate'):
+            while True:
+                self.trans = GUI('Translation','Write something:','Translate',persistance,result)
+                if(self.trans.event == 'Exit'):
+                    exit()
+                elif(self.trans.event == 'Menu'):
+                    self.start_GUI()
+                elif(self.trans.event == 'Translation'):
+                    result = self.askGPT3(self.trans.values[0])
+                    persistance=True
+
+        elif(self.gui.event == 'Exit'):
+            exit()
+        elif(self.gui.event == 'Ask something to AI'):
+            print('working on')
+        elif(self.gui.event == 'Check grammar'):
+            print('working on')
+
     def start(self):
         if(self.gui == 'yes'):
-            self.gui = GUI('CHAT GPT3','What are you wanna do today?')
+            self.start_GUI()
         else:
             clear()
             user_input = str(input("What are you gonna do to day?: \n        ** Options**  \n [1] translate \n [2] ask something to chatgpt 3 \n [3] check your grammar \n [4] exit \n [*] menu [write 'menu'] \n Answer: "))
@@ -138,10 +160,16 @@ class ChatGPT3:
 
 if(__name__ == '__main__'):
     key = sys.argv[1]
-    openai.api_key = key
-    gui = GUI('Chat GPT3 mode','How would you like to work?','initial')
-    mode = str(gui.event)
-    del gui
-    chat_gpt3 = ChatGPT3(mode)
-    clear()
-    chat_gpt3.start()
+    if(key !='dummy'):
+        openai.api_key = key
+        gui = GUI('Chat GPT3 mode','How would you like to work?','initial')
+        mode = str(gui.event)
+        if(mode == 'Exit'):
+            exit()
+        elif(mode == 'Console'):
+            result = subprocess.run("PowerShell.exe -WindowStyle Normal cd ../;" +
+                                "cd scripts;" + 
+                                "python3.exe ../Lib/GPT3/chatgpt3.py dummy") 
+        chat_gpt3 = ChatGPT3(mode)
+        clear()
+        chat_gpt3.start()
