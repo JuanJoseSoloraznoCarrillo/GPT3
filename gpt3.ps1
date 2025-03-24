@@ -1,3 +1,13 @@
+#===========================================================================
+# Author:  Solorzano, Juan Jose.
+# Date:    2021-09-01
+# Version: 1.0
+# Purpose: This script is used to install the GPT3 chatbot and run it.
+# The script will ask for the API KEY from OpenAI and the user's name.   
+#---------------------------------------------------------------------------
+# Usage:   Run the script in PowerShell.
+#===========================================================================
+
 PowerShell.exe -WindowStyle hidden {
 
     $key_file = 'api_key.cnf'
